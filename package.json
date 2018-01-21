@@ -8,5 +8,9 @@
   },*/
   "keywords": [],
   "author": "Vinh Tran <xuanvinh@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/voicon/node-seo-utils.git"
+  },
   "license": "ISC"
 }
