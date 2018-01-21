@@ -1,0 +1,79 @@
+
+1. detect rules types:
+ - a [tag] without an [attribute]?
+ - in [root] tag doesn't have [tag]
+ - in [root] tag doesn't have [tag] with an [attribute] not equal to [value]
+ - a [tag] have more than [n]
+
+ 2. reqs:
+    - npm package
+    - an array of chain
+    - user can define and use their own rules
+    - input:
+        + an input path to a html file
+        + node readable stream
+    - output
+        + a file (can define tored destination)
+        + node writable stream
+        + console
+
+Rule
+    - attribute
+        + doc
+        + result
+        + tag
+    - methods
+        + init
+        + check
+        + output
+
+RuleRootExistTag extends Rule
+
+RuleTagExistAttribute extends RuleRootExistTag
+    - attribute
+        + attribute
+
+RuleTagAttributeExistValue extends RuleTagExistAttribute
+    - attribute
+        + value
+
+RuleTagCount
+    - attribute
+        + limit
+        + operation (<, > , =)
+
+SEOUtilsManager
+    - attribute
+        + chain
+        + reader
+        + writer
+    - methods
+        + init
+        + read
+        + check
+        + write
+
+Reader
+    - methods
+        + read
+        + getDoc
+ReaderFile extends Reader
+    - attribute
+        + filePath
+ReaderStream extends Reader
+    - attribute
+        + stream
+
+Writer
+    - attribute
+        + data
+    - methods
+        + write
+
+WriterFile extends Writer
+    - attribute
+        + filePath
+WriterStream extends Writer
+
+WriterConsole extends Writer
+
