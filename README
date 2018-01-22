@@ -13,7 +13,7 @@
         + an input path to a html file
         + node readable stream
     - output
-        + a file (can define tored destination)
+        + a file (can define stored destination)
         + node writable stream
         + console
 
@@ -47,6 +47,7 @@ SEOUtilsManager
         + chain
         + reader
         + writer
+        + oDom
     - methods
         + init
         + read

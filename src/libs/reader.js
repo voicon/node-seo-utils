@@ -1,4 +1,5 @@
 var fs = require('fs');
+var deasync = require('deasync');
 
 
 function Reader() {
@@ -31,26 +32,31 @@ ReaderStream.prototype = new Reader();
 ReaderStream.prototype.constructor = ReaderStream;
 
 function ReaderStream(oStream) {
+    this.isReading = false;
     Reader.call(this);
     this.stream = oStream;
 }
 
 ReaderStream.prototype.read = function() {
     var me = this;
+    me.isReading = true;
     try {
-        this.stream.on('readable', function(data){
-            while ((chunk = me.stream.read()) != null) {
-                //console.log(chunk);
-                me.data += chunk;
-            }
+        me.stream.on('data', function(chunk){
+            me.data += chunk;
         }); 
-        this.stream.on('end', function(data){
-            //complete reading data from stream
+        me.stream.on('end', function(){
+            me.isReading = false;
         });
-        console.log(me.data);
     } catch(e) {
 
     }
+}
+
+ReaderStream.prototype.getDoc = function() {
+    while(this.isReading == true) {
+        deasync.runLoopOnce();
+    }
+    return this.data;
 }
 
 module.exports = {Reader: Reader, ReaderStream: ReaderStream, ReaderFile: ReaderFile};
