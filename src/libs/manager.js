@@ -42,4 +42,4 @@ Manager.prototype.write = function() {
     this.writer.write(data.join("\r\n"));
 }
 
-module.exports = Manager;
+module.exports = { Manager: Manager};

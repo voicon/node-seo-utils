@@ -2,8 +2,12 @@ const relPath = './../';
 const mag = require(relPath + 'libs/manager');
 const rule = require(relPath + 'libs/rule');
 const reader = require (relPath + 'libs/reader');
-const writer = require (relPath + 'libs/writer');
+const writer = require (relPath + 'libs/../writer');
+
+const seoutils = require('cheerio');
 const cheerio = require('cheerio');
+
+
 
 /*
 $ = cheerio.load('<h2 class = "title">Hello world</h2><meta name="keywords abc" /> <meta name="robots" />');
