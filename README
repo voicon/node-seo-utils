@@ -29,18 +29,18 @@ Rule
 
 RuleRootExistTag extends Rule
 
-RuleTagExistAttribute extends RuleRootExistTag
+RuleTagExistAttribute extends Rule
     - attribute
-        + attribute
+        + attr
 
-RuleTagAttributeExistValue extends RuleTagExistAttribute
+RuleTagAttributeExistValue extends Rule
     - attribute
+        + attr
         + value
 
 RuleTagCount
     - attribute
         + limit
-        + operation (<, > , =)
 
 SEOUtilsManager
     - attribute

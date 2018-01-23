@@ -1,8 +1,8 @@
-
-const mag = require('./src/libs/manager');
-const rule = require('./src/libs/rule');
-const reader = require ('./src/libs/reader');
-const writer = require ('./src/libs/writer');
+const relPath = './../';
+const mag = require(relPath + 'libs/manager');
+const rule = require(relPath + 'libs/rule');
+const reader = require (relPath + 'libs/reader');
+const writer = require (relPath + 'libs/writer');
 const cheerio = require('cheerio');
 
 /*
@@ -15,21 +15,21 @@ $('h2').addClass('welcome');
 console.log($('meta[name1]').length);*/
 
 
-//const Reader = require ('./src/libs/reader');
+//const Reader = require (relPath + 'libs/reader');
 
-/*var reader = new Reader.ReaderFile('./README');
+/*var reader = new Reader.ReaderFile(relPath + '../README');
 reader.read();
 console.log(reader.getDoc());*/
 
 /*var fs = require('fs');
-var readableStream = fs.createReadStream('./package.json');
+var readableStream = fs.createReadStream(relPath + '../package.json');
 var reader = new Reader.ReaderStream(readableStream);
 reader.read();
 console.log(reader.getDoc());*/
 
 var manager = new mag();
 
-manager.setReader(new reader.ReaderFile('./test/index.html'));
+manager.setReader(new reader.ReaderFile(relPath + '../test/index.html'));
 manager.setWriter(new writer.WriterConsole());
 
 manager.addRule(new rule.RuleRootExistTag('head', 'meta'));

@@ -20,7 +20,8 @@ Manager.prototype.setWriter = function (oWriter) {
 }
 
 Manager.prototype.check = function() {
-    this.oDom = cheerio.load(this.oReader.read());
+    this.reader.read();
+    this.oDom = cheerio.load(this.reader.getDoc());
     var me = this;
 
     if(this.chain.length > 0) {
@@ -32,7 +33,13 @@ Manager.prototype.check = function() {
 }
 
 Manager.prototype.write = function() {
-    this.oWriter.write();
+    var data = [];
+    if(this.chain.length > 0) {
+        this.chain.forEach(function(oChain) {
+            data.push(oChain.output());
+        });
+    }
+    this.writer.write(data.join("\r\n"));
 }
 
 module.exports = Manager;
