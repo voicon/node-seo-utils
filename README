@@ -1,4 +1,115 @@
 
+INSTALLATION
+    - Make a new directory for your project.
+    - Switch to the new directory (cd)
+    - Run npm install seoutils@1.0.1
+    - Create a test.js file which requires the package and calls the method.
+    - Run node test.js. The message sent to the console.log should appear.
+
+HOW TO USE
+
+This package have below classes
+{ 
+  Manager: [Function: bound Manager],
+  Rule: [Function: bound Rule],
+  RuleRootExistTag: [Function: bound RuleRootExistTag],
+  RuleTagExistAttribute: [Function: bound RuleTagExistAttribute],
+  RuleTagAttributeExistValue: [Function: bound RuleTagAttributeExistValue],
+  RuleTagCount: [Function: bound RuleTagCount],
+  Reader: [Function: bound Reader],
+  ReaderStream: [Function: bound ReaderStream],
+  ReaderFile: [Function: bound ReaderFile],
+  Writer: [Function: bound Writer],
+  WriterConsole: [Function: bound WriterConsole],
+  WriterFile: [Function: bound WriterFile],
+  WriterStream: [Function: bound WriterStream] 
+}
+
+
+//Using
+
+const seoutil = require('seoutils');
+
+var manager = new seoutil.Manager();
+
+//var fs = require('fs');
+//var rstream = fs.createReadStream('./test/index.html');
+//manager.setWriter(new seoutil.ReaderStream(rstream));
+
+manager.setReader(new seoutil.ReaderFile('./test/index.html'));
+manager.setWriter(new seoutil.WriterConsole());
+
+//manager.setWriter(new seoutil.WriterFile('./test/out'));
+//var fs = require('fs');
+//var wstream = fs.createWriteStream('./test/out1');
+//manager.setWriter(new seoutil.WriterStream(wstream));
+
+manager.addRule(new seoutil.RuleRootExistTag('head', 'meta'));
+manager.addRule(new seoutil.RuleRootExistTag('head', 'title'));
+manager.addRule(new seoutil.RuleTagExistAttribute('head', 'meta', 'name'));
+manager.addRule(new seoutil.RuleTagExistAttribute('head', 'meta', 'rel'));
+manager.addRule(new seoutil.RuleTagExistAttribute('', 'ul', 'class'));
+manager.addRule(new seoutil.RuleTagExistAttribute('', 'address', 'name'));
+manager.addRule(new seoutil.RuleTagAttributeExistValue('head', 'meta', 'name', 'keywords'));
+manager.addRule(new seoutil.RuleTagAttributeExistValue('', 'a', 'href', 'index'));
+manager.addRule(new seoutil.RuleTagCount('', 'li', 3));
+
+manager.check();
+manager.write();
+
+ADD CUSTOM RULE
+
+It need to inherit Rule and implement some main methods. Example:
+
+RuleNew.prototype = new Rule();
+RuleNew.prototype.constructor = RuleNew;
+
+function RuleNew(root) {
+    Rule.call(this, root);
+    //construtor here
+}
+RuleNew.prototype.check = function() {
+    //check the rule here
+}
+RuleNew.prototype.output = function() {
+    //render the result here
+}
+
+ADD CUSTOM READER
+
+It need to inherit Reader and implement some main methods. Example:
+ReaderNew.prototype = new Reader();
+ReaderNew.prototype.constructor = ReaderNew;
+
+function ReaderNew(sFilePath) {
+    Reader.call(this);
+    /constructor
+}
+ReaderNew.prototype.read = function() {
+    //read data
+}
+ReaderNew.prototype.getDoc = function() {
+    //get result data as string
+}
+
+ADD CUSTOM WRITER
+
+It need to inherit Writer and implement some main methods. Example:
+WriterNew.prototype = new Writer();
+WriterNew.prototype.constructor = WriterNew;
+
+function WriterNew() {
+    Writer.call(this);
+    //constructor here
+}
+
+WriterNew.prototype.write = function(data) {
+    //write data
+}
+
+
+REQUIREMENTS AND DESIGN
+
 1. detect rules types:
  - a [tag] without an [attribute]?
  - in [root] tag doesn't have [tag]
