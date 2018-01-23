@@ -30,7 +30,10 @@ console.log(reader.getDoc());*/
 var manager = new mag();
 
 manager.setReader(new reader.ReaderFile(relPath + '../test/index.html'));
-manager.setWriter(new writer.WriterConsole());
+//manager.setWriter(new writer.WriterConsole());
+//manager.setWriter(new writer.WriterFile(relPath + '../test/out'));
+var wstream = fs.createWriteStream(relPath + '../test/out1');
+manager.setWriter(new writer.WriterStream(wstream));
 
 manager.addRule(new rule.RuleRootExistTag('head', 'meta'));
 manager.addRule(new rule.RuleRootExistTag('head', 'title'));
@@ -38,12 +41,9 @@ manager.addRule(new rule.RuleTagExistAttribute('head', 'meta', 'name'));
 manager.addRule(new rule.RuleTagExistAttribute('head', 'meta', 'rel'));
 manager.addRule(new rule.RuleTagExistAttribute('', 'ul', 'class'));
 manager.addRule(new rule.RuleTagExistAttribute('', 'address', 'name'));
-
 manager.addRule(new rule.RuleTagAttributeExistValue('head', 'meta', 'name', 'keywords'));
 manager.addRule(new rule.RuleTagAttributeExistValue('', 'a', 'href', 'index'));
-
-manager.addRule(new rule.RuleTagCount('', 'li', 5));
-
+manager.addRule(new rule.RuleTagCount('', 'li', 3));
 
 manager.check();
 manager.write();
